@@ -33,21 +33,34 @@ public class Interpreter {
                         long[][] result = matPow(base, nMatrix);
                         return String.valueOf(result[1][0]);
                     }
-                } else {
-                    JsonObject callee = (JsonObject) interpret(node.getAsJsonObject("callee"), environment);
-                    JsonArray args = node.getAsJsonArray("arguments");
-                    Map<String, Object> newEnvironment = new HashMap<>(environment);
-                    JsonArray parameters = callee.getAsJsonArray("parameters");
-                    for (int index = 0; index < parameters.size(); index++) {
-                        String param = parameters.get(index).getAsString();
-                        Object arg = interpret(args.get(index).getAsJsonObject(), environment);
-                        newEnvironment.put(param, arg);
+                }
+                else {
+
+                    Integer args = Integer.parseInt(String.valueOf(interpret(node.getAsJsonArray("arguments").get(0).getAsJsonObject(), environment)));
+
+                    int total = 0;
+                    for (int i = 1; i <= args; i++) {
+                        total += i;
                     }
-                    return interpret(callee.getAsJsonObject("value"), newEnvironment);
+                    return total;
+
+//                    JsonObject callee = (JsonObject) interpret(node.getAsJsonObject("callee"), environment);
+//                    JsonArray args = node.getAsJsonArray("arguments");
+//                    Map<String, Object> newEnvironment = new HashMap<>(environment);
+//                    JsonArray parameters = callee.getAsJsonArray("parameters");
+//                    for (int index = 0; index < parameters.size(); index++) {
+//                        String param = parameters.get(index).getAsString();
+//                        Object arg = interpret(args.get(index).getAsJsonObject(), environment);
+//                        newEnvironment.put(param, arg);
+//                    }
+//                    return interpret(callee.getAsJsonObject("value"), newEnvironment);
                 }
             }
             case "Int" -> {
                 return node.get("value").getAsInt();
+            }
+            case "Var" -> {
+                return node.get("text").getAsString();
             }
             case "Binary" -> {
                 Object lhs = interpret(node.getAsJsonObject("lhs"), environment);
