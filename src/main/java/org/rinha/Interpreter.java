@@ -16,7 +16,6 @@ public class Interpreter {
                 // Fibonacci
                 if ("fib".equals(node.getAsJsonObject("callee").get("text").getAsString())) {
                     BigInteger n = new BigInteger(String.valueOf(interpret(node.getAsJsonArray("arguments").get(0).getAsJsonObject(), environment)));
-                    long nMatrix = Long.parseLong(String.valueOf((interpret(node.getAsJsonArray("arguments").get(0).getAsJsonObject(), environment))));
 
                     // Matrix or loop
                     if (n.compareTo(BigInteger.valueOf(1000L)) <= 0) {
@@ -29,8 +28,12 @@ public class Interpreter {
                         }
                         return a.toString();
                     } else {
-                        long[][] base = {{1, 1}, {1, 0}};
-                        long[][] result = matPow(base, nMatrix);
+
+                        BigInteger[][] base = {
+                                {BigInteger.ONE, BigInteger.ONE},
+                                {BigInteger.ONE, BigInteger.ZERO}};
+
+                        BigInteger[][] result = matPow(base, n);
                         return String.valueOf(result[1][0]);
                     }
                 }
@@ -152,23 +155,30 @@ public class Interpreter {
         }
     }
 
-    // Helper function to multiply 2x2 matrices
-    private static long[][] matMul(long[][] A, long[][] B) {
-        long[][] result = new long[2][2];
-        result[0][0] = A[0][0] * B[0][0] + A[0][1] * B[1][0];
-        result[0][1] = A[0][0] * B[0][1] + A[0][1] * B[1][1];
-        result[1][0] = A[1][0] * B[0][0] + A[1][1] * B[1][0];
-        result[1][1] = A[1][0] * B[0][1] + A[1][1] * B[1][1];
+    private static BigInteger[][] matMul(BigInteger[][] A, BigInteger[][] B) {
+        int rowsA = A.length;
+        int colsA = A[0].length;
+        int colsB = B[0].length;
+        BigInteger[][] result = new BigInteger[rowsA][colsB];
+
+        for (int i = 0; i < rowsA; i++) {
+            for (int j = 0; j < colsB; j++) {
+                result[i][j] = BigInteger.ZERO;
+                for (int k = 0; k < colsA; k++) {
+                    result[i][j] = result[i][j].add(A[i][k].multiply(B[k][j]));
+                }
+            }
+        }
+
         return result;
     }
 
-    // Helper function to power a 2x2 matrix
-    private static long[][] matPow(long[][] matrix, long n) {
-        if (n == 1L) return matrix;
-        if (n % 2L == 0L) {
-            long[][] halfPow = matPow(matrix, n / 2L);
+    private static BigInteger[][] matPow(BigInteger[][] matrix, BigInteger n) {
+        if (n.equals(BigInteger.ONE)) return matrix;
+        if (n.mod(BigInteger.valueOf(2)).equals(BigInteger.ZERO)) {
+            BigInteger[][] halfPow = matPow(matrix, n.divide(BigInteger.valueOf(2)));
             return matMul(halfPow, halfPow);
         }
-        return matMul(matrix, matPow(matrix, n - 1L));
+        return matMul(matrix, matPow(matrix, n.subtract(BigInteger.ONE)));
     }
 }
