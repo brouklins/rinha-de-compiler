@@ -1,6 +1,5 @@
 package org.rinha;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import java.math.BigInteger;
@@ -39,7 +38,7 @@ public class Interpreter {
                 }
                 else if ("sum".equals(node.getAsJsonObject("callee").get("text").getAsString())){
 
-                    Integer args = Integer.parseInt(String.valueOf(interpret(node.getAsJsonArray("arguments").get(0).getAsJsonObject(), environment)));
+                    int args = Integer.parseInt(String.valueOf(interpret(node.getAsJsonArray("arguments").get(0).getAsJsonObject(), environment)));
 
                     int total = 0;
                     for (int i = 1; i <= args; i++) {
@@ -49,8 +48,8 @@ public class Interpreter {
 
                 } else{
 
-                    Integer n = Integer.parseInt(String.valueOf(interpret(node.getAsJsonArray("arguments").get(0).getAsJsonObject(), environment)));
-                    Integer k = Integer.parseInt(String.valueOf(interpret(node.getAsJsonArray("arguments").get(1).getAsJsonObject(), environment)));
+                    int n = Integer.parseInt(String.valueOf(interpret(node.getAsJsonArray("arguments").get(0).getAsJsonObject(), environment)));
+                    int k = Integer.parseInt(String.valueOf(interpret(node.getAsJsonArray("arguments").get(1).getAsJsonObject(), environment)));
 
                     if (k < 0 || k > n) {
                         return 0;
