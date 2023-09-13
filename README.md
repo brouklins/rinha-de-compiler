@@ -2,6 +2,8 @@
 
 Author: Fernando Oliveira
 
+✅ fib <br/> ✅ combination <br/> ✅ sum <br/> ✅ print
+
 ## Introdução
 
 O ideal da rinha é fazer um interpretador ou compilador que rode em uma maquina com 2 núcleos e 2G de RAM.
