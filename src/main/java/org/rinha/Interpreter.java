@@ -34,7 +34,7 @@ public class Interpreter {
                         return String.valueOf(result[1][0]);
                     }
                 }
-                else {
+                else if ("sum".equals(node.getAsJsonObject("callee").get("text").getAsString())){
 
                     Integer args = Integer.parseInt(String.valueOf(interpret(node.getAsJsonArray("arguments").get(0).getAsJsonObject(), environment)));
 
@@ -44,16 +44,27 @@ public class Interpreter {
                     }
                     return total;
 
-//                    JsonObject callee = (JsonObject) interpret(node.getAsJsonObject("callee"), environment);
-//                    JsonArray args = node.getAsJsonArray("arguments");
-//                    Map<String, Object> newEnvironment = new HashMap<>(environment);
-//                    JsonArray parameters = callee.getAsJsonArray("parameters");
-//                    for (int index = 0; index < parameters.size(); index++) {
-//                        String param = parameters.get(index).getAsString();
-//                        Object arg = interpret(args.get(index).getAsJsonObject(), environment);
-//                        newEnvironment.put(param, arg);
-//                    }
-//                    return interpret(callee.getAsJsonObject("value"), newEnvironment);
+                } else{
+
+                    Integer n = Integer.parseInt(String.valueOf(interpret(node.getAsJsonArray("arguments").get(0).getAsJsonObject(), environment)));
+                    Integer k = Integer.parseInt(String.valueOf(interpret(node.getAsJsonArray("arguments").get(1).getAsJsonObject(), environment)));
+
+                    if (k < 0 || k > n) {
+                        return 0;
+                    }
+
+                    int result = 1;
+
+                    if (k > n - k) {
+                        k = n - k;
+                    }
+
+                    for (int i = 0; i < k; i++) {
+                        result *= (n - i);
+                        result /= (i + 1);
+                    }
+
+                    return result;
                 }
             }
             case "Int" -> {
