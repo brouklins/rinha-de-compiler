@@ -1,6 +1,10 @@
 # Tree-walking Interpretador utilizando Java 17
 
-Author: Fernando Oliveira
+# Rinha
+
+Essa é um transpiler do tipo Tree-walking interpreter implementado em Java para a [Rinha de Compiladores](https://github.com/aripiprazole/rinha-de-compiler).
+
+Utilizando a AST (arvore sintática abstrata) para interpretar a linguagem .rinha
 
 ✅ fib <br/> ✅ combination <br/> ✅ sum <br/> ✅ print
 
