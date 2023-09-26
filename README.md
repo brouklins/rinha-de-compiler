@@ -35,7 +35,7 @@ Durante a rinha nós iremos adicionar outros testes :)
 
 ## Requisitos
 
-Você tem que fazer um PR, alterando o arquivo [PARTICIPANTS.md](PARTICIPANTS.md),
+Você tem que fazer um PR, alterando o arquivo [PARTICIPANTS.md](https://github.com/aripiprazole/rinha-de-compiler/blob/main/PARTICIPANTS.md),
 com uma nova linha e seu repositório. Talvez isso seja mudado depois (fique atento).
 
 Seu repositório terá que ter uma imagem no root do repositório, e buildaremos a imagem
