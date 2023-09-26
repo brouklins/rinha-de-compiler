@@ -125,6 +125,62 @@ public class Interpreter {
                             return (int) lhs < (int) rhs;
                         }
                     }
+                    case "Eq" -> {
+                        if (lhs instanceof BigInteger && rhs instanceof BigInteger) {
+                            return (lhs).equals(rhs);
+                        } else if (lhs instanceof Integer && rhs instanceof Integer) {
+                            return (int) lhs == (int) rhs;
+                        }
+                    }
+                    case "Neq" -> {
+                        if (lhs instanceof BigInteger && rhs instanceof BigInteger) {
+                            return ((BigInteger) lhs).compareTo((BigInteger) rhs) != 0;
+                        } else if (lhs instanceof Integer && rhs instanceof Integer) {
+                            return (int) lhs != (int) rhs;
+                        }
+                    }
+                    case "Gt" -> {
+                        if (lhs instanceof BigInteger && rhs instanceof BigInteger) {
+                            return ((BigInteger) lhs).compareTo((BigInteger) rhs) > 0;
+                        } else if (lhs instanceof Integer && rhs instanceof Integer) {
+                            return (int) lhs > (int) rhs;
+                        }
+                    }
+                    case "Gte" -> {
+                        if (lhs instanceof BigInteger && rhs instanceof BigInteger) {
+                            return ((BigInteger) lhs).compareTo((BigInteger) rhs) >= 0;
+                        } else if (lhs instanceof Integer && rhs instanceof Integer) {
+                            return (int) lhs >= (int) rhs;
+                        }
+                    }
+                    case "Lte" -> {
+                        if (lhs instanceof BigInteger && rhs instanceof BigInteger) {
+                            return ((BigInteger) lhs).compareTo((BigInteger) rhs) <= 0;
+                        } else if (lhs instanceof Integer && rhs instanceof Integer) {
+                            return (int) lhs <= (int) rhs;
+                        }
+                    }
+                    case "And" -> {
+                        if (lhs instanceof BigInteger && rhs instanceof BigInteger) {
+                            return ((BigInteger) lhs).and((BigInteger) rhs);
+                        } else if (lhs instanceof Integer && rhs instanceof Integer) {
+                            return (int) lhs & (int) rhs;
+                        }
+                    }
+                    case "Or" -> {
+                        if (lhs instanceof BigInteger && rhs instanceof BigInteger) {
+                            return ((BigInteger) lhs).or((BigInteger) rhs);
+                        } else if (lhs instanceof Integer && rhs instanceof Integer) {
+                            return (int) lhs | (int) rhs;
+                        }
+                    }
+                    case "Rem" -> {
+                        if (lhs instanceof BigInteger && rhs instanceof BigInteger) {
+                            return ((BigInteger) lhs).divideAndRemainder((BigInteger) rhs);
+                        } else if (lhs instanceof Integer && rhs instanceof Integer) {
+                            return (int) lhs % (int) rhs;
+                        }
+                    }
                 }
                 System.err.println("Unknown operator " + node.get("op").getAsString());
                 return null;
